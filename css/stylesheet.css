@@ -49,8 +49,8 @@ a:hover {
 }
 
 #left {
-	width:238px;
-	padding: 5px 5px 5px 5px;
+	width:248px;
+	padding: 5px 0px 5px 0px;
 	margin-top: 5px;
 	border-top: 1px solid #d7d7d7;
 	border-left: 1px solid #d7d7d7;
@@ -61,6 +61,54 @@ a:hover {
 	-moz-border-radius-topleft: 5px;
 	-moz-border-radius-bottomleft: 5px;
 	float: left;
+}
+
+/* MENIU-LATERAL */
+
+.meniu-lateral ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.meniu-lateral li a {
+	color: #000000;
+	text-decoration: none;
+  	height: 27px;
+	font-weight:bold;
+	font-size:12px;
+}
+	
+.meniu-lateral li a:link, .meniu-lateral li a:visited {
+	display: block;
+	padding: 10px 0 0 30px;
+}
+	
+.meniu-lateral li a:hover {
+	display: block;
+	background-color: #f9f9f9;
+	padding: 10px 0 0 30px;
+}
+
+.facebook a {
+	background-image: url(../img/social/facebook.png); 
+	background-repeat: no-repeat; 
+	background-position: left; 
+	color: #ffffff;
+}
+
+.twitter a {
+	background-image: url(../img/social/twitter.png); 
+	background-repeat: no-repeat; 
+	background-position: left; 
+	color: #ffffff;
+}
+
+.google a {
+	background-image: url(../img/social/google.png); 
+	background-repeat: no-repeat; 
+	background-position: left; 
+	color: #ffffff;
 }
 
 #right {
