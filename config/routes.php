@@ -13,5 +13,4 @@ $routes[''] = 'home';
 $routes['home'] = 'home';
 $routes['error'] = 'error';
 
-
 $routes['login'] = 'login';
