@@ -5,16 +5,16 @@ body {
 }
 
 #nav-container {
-  color: #000000;
+  color: #fff;
   padding: 15px 0px 15px 0px;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f4f4f4), to(#eeeeee));
-  background-image: -webkit-linear-gradient(top, #f4f4f4, #eeeeee);
-  background-image: -o-linear-gradient(top, #f4f4f4, #eeeeee);
-  background-image: linear-gradient(to bottom, #f4f4f4, #eeeeee);
-  background-image: -moz-linear-gradient(top, #f4f4f4, #eeeeee);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(#121212));
+  background-image: -webkit-linear-gradient(top, #222222, #121212);
+  background-image: -o-linear-gradient(top, #222222, #121212);
+  background-image: linear-gradient(to bottom, #222222, #121212);
+  background-image: -moz-linear-gradient(top, #222222, #121212);
   background-repeat: repeat-x;
-  border-bottom: 1px solid #c9c9c9;
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#fff4f4f4', endColorstr='#ffeeeeee', GradientType=0);
+  border-bottom: 1px solid #0f0f0f;
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff222222', endColorstr='#ff121212', GradientType=0);
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
      -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
