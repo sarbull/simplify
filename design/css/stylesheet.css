@@ -51,8 +51,8 @@ a:hover {
 	width:228px;
 	padding: 5px 5px 5px 5px;
 	margin-right: 10px;
-	border: 1px solid #999999;
-	background-color: #f8f8f8;
+	border: 1px solid #e8e8e8;
+	background-color: #fff;
 	border-radius: 7px;
 	-moz-border-radius: 7px;
 	float: left;
@@ -61,8 +61,8 @@ a:hover {
 #right {
 	width:638px;
 	padding: 5px 5px 5px 5px;
-	border: 1px solid #999999;
-	background-color: #f8f8f8;
+	border: 1px solid #e8e8e8;
+	background-color: #fff;
 	border-radius: 7px;
 	-moz-border-radius: 7px;
 	float: left;
