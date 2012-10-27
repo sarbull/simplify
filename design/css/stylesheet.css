@@ -6,7 +6,7 @@ body {
 
 #nav-container {
   color: #fff;
-  padding: 15px 0px 15px 0px;
+  padding: 10px 0px 10px 0px;
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(#121212));
   background-image: -webkit-linear-gradient(top, #222222, #121212);
   background-image: -o-linear-gradient(top, #222222, #121212);
@@ -29,4 +29,30 @@ body {
 #wrap {
 	width:900px;
 	margin: auto;
+}
+
+#cols {
+	width:900px;
+	margin: auto;
+}
+
+#left {
+	width:228px;
+	padding: 5px 5px 5px 5px;
+	margin-right: 10px;
+	border: 1px solid #c1c1c1;
+	background-color: #eeeeee;
+	border-radius: 7px;
+	-moz-border-radius: 7px;
+	float: left;
+}
+
+#right {
+	width:638px;
+	padding: 5px 5px 5px 5px;
+	border: 1px solid #c1c1c1;
+	background-color: #eeeeee;
+	border-radius: 7px;
+	-moz-border-radius: 7px;
+	float: left;
 }
