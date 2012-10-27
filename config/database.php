@@ -5,7 +5,7 @@
 
 $config['database'] = array(
 		'host' => 'localhost', 
-		'user' => 'dev',
-		'password' => 'devpass',
-		'database' => 'dev_simplify',
+		'user' => 'root',
+		'password' => '1234',
+		'database' => 'simplify',
 	);
