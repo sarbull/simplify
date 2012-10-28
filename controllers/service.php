@@ -5,30 +5,31 @@
 class ServiceController extends Controller {
 	
 	/**
-	 * List of allowed/existent services.
-	 * @var array
+	 * Require authentication.
+	 * @var boolean
 	 */
-	private $allowedServices = array(
-			'facebook', 'googleplus'
-		);
+	protected $authorize = true;
 	
 	/**
 	 * Dispatch the response to the specified service class.
 	 * @return void
 	 */
 	public function index($service = null) {
+		global $config;
 		if (!isset($service)) 
 			redirect('error');
 		
-		if (!in_array($service, $this->allowedServices)) {
-			redirect('errcontror');
+		if (!in_array($service, $config['services'])) {
+			redirect('error');
 		}
 		
 		$serviceObj = BaseService::loadService($service);
-		$clientData = $serviceObj->getClientData();
+		$serviceAuth = $serviceObj->getAuthenticator();
+		$clientData = $serviceAuth->getClientData();
 		if (!$clientData) {
 			$this->set('error', true);
-			$this->tpl->display("service-configured.phtml");
+			$this->tpl->display("service-connected.phtml");
+			die();
 		}
 		
 		global $db;
@@ -40,7 +41,7 @@ class ServiceController extends Controller {
 			);
 		$db->qinsert('user_feeds', $record);
 		
-		$this->tpl->display("service-configured.phtml");
+		$this->tpl->display("service-connected.phtml");
 	}
 	
 	/**
@@ -51,7 +52,7 @@ class ServiceController extends Controller {
 	 * @return void
 	 */
 	public function __call($name, $arguments) {
-		return index($name);
+		return $this->index($name);
 	}
 	
 }

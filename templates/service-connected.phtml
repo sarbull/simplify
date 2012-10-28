@@ -1,0 +1,10 @@
+<?
+/**
+ * Services connection popup window handler.
+ */
+?>
+<script type="text/javascript"><!--
+window.opener.serviceConnectedNotification('<?=$service?>', 
+	<?=(isset($error)?'false':'true');?>);
+window.close();
+--></script>

@@ -24,3 +24,7 @@ $config['template'] = array(
 		'dir' => SITE_ROOT.'/templates/',
 		'cache' => SITE_ROOT.'/tmp/',
 	);
+
+// content provider services
+
+$config['services'] = array('facebook');

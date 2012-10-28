@@ -42,7 +42,7 @@ abstract class BaseService {
 		global $db;
 		
 		$dbitems = $db->fetch_all("SELECT * FROM feed_items WHERE " . 
-			implode(' AND ', $where));
+			implode(' AND ', $where)." ORDER BY `timestamp` DESC");
 		
 		$items = array();
 		foreach ($dbitems as $dbitem) {

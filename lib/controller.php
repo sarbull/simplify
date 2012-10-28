@@ -42,6 +42,8 @@ class Controller {
 	 * @return void
 	 */
 	public function beforeAction() {
+		global $db;
+		
 		// load the user from database
 		if (isset($_SESSION['user'])) {
 			$this->user = $db->fetch("SELECT * FROM `users` WHERE `id`='" . 
@@ -72,6 +74,17 @@ class Controller {
 		} else {
 			$this->tpl->set($var, $value);
 		}
+	}
+	
+	/**
+	 * Magic method call for the controller's actions that are not implemented.
+	 * 
+	 * @param  string $name Method's name. 
+	 * @param  array $arguments Method's arguments. 
+	 * @return void
+	 */
+	public function __call($name, $arguments) {
+		redirect('error');
 	}
 	
 	/**
@@ -106,13 +119,8 @@ class Controller {
 		$class = ucfirst($controller).'Controller';
 		$obj = new $class();
 		
-		if (method_exists($obj, $action_segment)) {
-			$obj->$action_segment($components);
-			return;
-			
-		} else {
-			self::dispatch('error/not_found');
-		}
+		$obj->beforeAction();
+		$obj->$action_segment($components);
 		
 	}
 	

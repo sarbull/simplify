@@ -1,8 +1,34 @@
 <?$this->display('inc.header.phtml');?>
-		<div id="wrap">
-			<h2>Connect your social accounts</h2>
-			Google+<br/>
-			Twitter<br/>
-			Facebook<br/>
-		</div>
+
+<div id="wrap">
+	<h2>Connect your social accounts</h2>
+	
+	<div id="serviceConnectResults"></div>
+	
+	<b>Google+:</b> not implemented<br/>
+	
+	<b>Twitter:</b> not implemented<br/>
+	
+	<b>Facebook:</b> 
+	<? if (isset($services['facebook']['record'])): ?>
+	<span class="green">connected!</span>
+	<? else: ?>
+	<?=$services['facebook']['obj']->getAuthenticator()->getAuthAction();?><br/>
+	<? endif; ?>
+</div>
+
+<script type="text/javascript"><!--
+/**
+ * Callback for service connection notification.
+ * Called by the popup windows to tell their parent window authentication status.
+ *   
+ * @param  {String}  service Service's name.
+ * @param  {Boolean} succeeded Whether the authentication succeeded.
+ */
+function serviceConnectedNotification(service, succeeded) {
+	$('#serviceConnectResults').html('<div class="'+(succeeded? 'success' : 'error')+'">Conectare '+
+		(succeeded? 'reuşită' : 'eşuată')+'</div>');
+}
+--></script>
+
 <?$this->display('inc.footer.phtml');?>

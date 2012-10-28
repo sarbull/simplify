@@ -65,6 +65,12 @@ class FeedObject {
 	public $content = '';
 	
 	/**
+	 * Item's link.
+	 * @var string
+	 */
+	public $link = '';
+	
+	/**
 	 * Other feed data, as an array (will be serialized before storage).
 	 * @var array
 	 */
@@ -84,6 +90,7 @@ class FeedObject {
 		$this->author = $item['author'];
 		$this->author_id = $item['author_id'];
 		$this->author_data = @unserialize($item['author_data']);
+		$this->link = $item['link'];
 		
 		$this->title = $item['title'];
 		$this->content = $item['content'];
@@ -107,6 +114,7 @@ class FeedObject {
 			'author' => $this->author,
 			'author_id' => $this->author_id,
 			'author_data' => serialize($this->author_data),
+			'link' => $this->link,
 			
 			'title' => $this->title,
 			'content' => $this->content,
@@ -116,9 +124,9 @@ class FeedObject {
 		$existing = $db->fetch("SELECT `id` FROM `feed_items` WHERE `service`='".$db->escape($item['service'])."' 
 				AND `item_id`='".$db->escape($item['item_id'])."'");
 		if ($existing) {
-			return $db->qupdate($item, '`id`=\''.$db->escape($existing['id']).'\'');
+			return $db->qupdate('feed_items', $item, '`id`=\''.$db->escape($existing['id']).'\'');
 		} else {
-			return $db->qinsert($item);
+			return $db->qinsert('feed_items', $item);
 		}
 		
 	}

@@ -3,7 +3,7 @@
  * Routes configuration file.
  * 
  * Array syntax: 
- *    'page' => 'controller_name'
+ *    'link_part' => 'controller_name'
  * 
  */
 
@@ -16,3 +16,5 @@ $routes['connect-your-accounts'] = 'connect';
 $routes['error'] = 'error';
 
 $routes['login'] = 'login';
+
+$routes['service'] = 'service';

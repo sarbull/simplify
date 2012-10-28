@@ -12,87 +12,38 @@
 			</div>
 		</div>
 		<div id="right">
-			<div id="sort" style="font-size:12px;margin-bottom:15px;">
-				Sort by
-				<span style="color:#888888;"> 
-					<input type="checkbox"/> date   
-					<input type="checkbox"/> popularity 
-					<input type="checkbox"/> family   
-				</span>
-			</div>
-
-
+			<form action="home/filter">
+				<div id="filterForm" style="font-size:12px;margin-bottom:15px;">
+					<input style="width: 99%;" placeholder="filter..." type="text" name="search" /><br />
+				</div>
+			</form>
+			
+			<? foreach ($items as $item): ?>
 			<div class="item">
+				<div class="hr"></div>
+				<div style="float: right;">
+					<span title="<?=date('d.m.Y h:i:s', strtotime($item->timestamp))?>"><?=humanizeDateDiffference(time(), strtotime($item->timestamp))?></span>
+				</div>
 				<span class="img">
-					<img src="https://secure.gravatar.com/avatar/0bfcd39eb1ec753fcc00f2e88bbea6bd" width="60" height="60"/>
+					<?
+					$image = 'http://graph.facebook.com/1/picture';
+					if (isset($item->author_data['avatar'])) 
+						$image = $item->author_data['avatar'];
+					$link = 'https://www.facebook.com';
+					if (!empty($item->link))
+						$link = $item->link;
+					?>
+					<img src="<?=$image?>" width="50" height="50"/>
 				</span>
-				<span class="name">Sirbu Nicolae-Cezar</span>
-				<span class="via">via Facebook</span>
+				<span class="name"><?=ehtml($item->author)?></span>
+				<span class="via"><a href="<?=ehtml($link)?>">via <?=ucfirst($item->service)?></a></span>
 				<p class="content">
-					Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea, când un tipograf anonim a luat o ..
+					<?=nl2br(ehtml($item->content))?>
 				</p>
 				<br style="clear:both;height:0px;"/>
 			</div>
-
-			<div class="item">
-				<span class="img">
-					<img src="https://secure.gravatar.com/avatar/0bfcd39eb1ec753fsd0f2e88bbea6bd?default=monsterid&amp;forcedefault=1" width="60" height="60"/>
-				</span>
-				<span class="name">Popescu Marius-Florin</span>
-				<span class="via">via Twitter</span>
-				<p class="content">
-					În ciuda opiniei publice, Lorem Ipsum nu e un simplu text fără sens. El îşi are rădăcinile într-o bucată a literaturii clasice latine din anul 45 î.e.n., făcând-o să aibă mai bine de 2000 ani. Profesorul universitar de latină de la colegiul Hampden-Sydney din Virginia, Richard McClintock, a căutat în bibliografie unul din cele mai rar
-				</p>
-				<br style="clear:both;height:0px;"/>
-			</div>
-
-			<div class="item">
-				<span class="img">
-					<img src="http://www.gravatar.com/avatar/ee4d1b570e216ce63c7d97043980a98c?default=monsterid&amp;forcedefault=1" width="60" height="60"/>
-				</span>
-				<span class="name">Stancu Florin</span>
-				<span class="via">via Google+</span>
-				<p class="content">
-					E un fapt bine stabilit că cititorul va fi sustras de conţinutul citibil al unei pagini atunci când se uită la aşezarea în pagină. Scopul utilizării a Lorem Ipsum, este acela că are
-				</p>
-				<br style="clear:both;height:0px;"/>
-			</div>
-
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
+			<? endforeach; ?>
+			
 		</div>
 		<br style="clear:both;">
 	</div>
