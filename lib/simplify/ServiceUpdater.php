@@ -9,7 +9,7 @@ class ServiceUpdater {
 	 * 
 	 * @var integer
 	 */
-	public static $updateInterval = 30; // 5 minutes
+	public static $updateInterval = 300; // 5 minutes
 	
 	/**
 	 * Fetches the specified user's feeds and updates the database.

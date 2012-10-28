@@ -22,7 +22,7 @@ class ConnectController extends Controller {
 			$services[$service]['obj'] = BaseService::loadService($service);
 			
 		}
-		$db_services = $db->fetch_all("SELECT * FROM `user_feeds` WHERE `id`='".
+		$db_services = $db->fetch_all("SELECT * FROM `user_feeds` WHERE `user_id`='".
 			$db->escape($this->user['id'])."'");
 		foreach ($db_services as $dbservice) {
 			if (!isset($services[$dbservice['service']]))

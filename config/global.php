@@ -27,4 +27,4 @@ $config['template'] = array(
 
 // content provider services
 
-$config['services'] = array('facebook');
+$config['services'] = array('facebook', 'googleplus');

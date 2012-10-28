@@ -1,42 +1,57 @@
 <?$this->display('inc.header.phtml');?>
-		<div id="wrap">
-			<h2>User details</h2>
-			<form action="" method="post">
-				<table>
-					<tr>
-						<td>Full name</td>
-						<td><input type="text"/></td>
-					</tr>
-					<tr>
-						<td>Email adress</td>
-						<td><input type="text"/></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="submit"/></td>
-					</tr>
-				</table>
-			</form>
-			<h2>Change your password</h2>
-			<form action="" method="post">
-				<table>
-					<tr>
-						<td>Old password</td>
-						<td><input type="text"/></td>
-					</tr>
-					<tr>
-						<td>New password</td>
-						<td><input type="text"/></td>
-					</tr>
-					<tr>
-						<td>Rewrite new password</td>
-						<td><input type="text"/></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="submit"/></td>
-					</tr>
-				</table>
-			</form>
-		</div>
+<div id="wrap">
+	<h2>User details</h2>
+	
+	<? if (isset($details_success)): ?>
+	<div class="success"><?=$details_success?></div><br />
+	<? elseif (isset($details_error)): ?>
+	<div class="error"><?=$details_error?></div><br />
+	<? endif; ?>
+	
+	<form action="settings/details" method="post">
+		<table>
+			<tr>
+				<td style="width: 150px;">Full name: </td>
+				<td><input type="text" name="name" value="<?=ehtml($user['name'])?>" /></td>
+			</tr>
+			<tr>
+				<td>Email adress:</td>
+				<td><input type="text" name="email" value="<?=ehtml($user['email'])?>" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Change details" /></td>
+			</tr>
+		</table>
+	</form>
+	<br />
+	<h2>Change your password</h2>
+	
+	<? if (isset($password_success)): ?>
+	<div class="success"><?=$password_success?></div><br />
+	<? elseif (isset($password_error)): ?>
+	<div class="error"><?=$password_error?></div><br />
+	<? endif; ?>
+	
+	<form action="settings/password" method="post">
+		<table>
+			<tr>
+				<td style="width: 150px;">Old password:</td>
+				<td><input type="password" name="old_password" /></td>
+			</tr>
+			<tr>
+				<td>New password:</td>
+				<td><input type="password" name="new_password" /></td>
+			</tr>
+			<tr>
+				<td>Repeat password:</td>
+				<td><input type="password" name="repeat_password" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Change password" /></td>
+			</tr>
+		</table>
+	</form>
+</div>
 <?$this->display('inc.footer.phtml');?>

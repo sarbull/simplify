@@ -15,6 +15,12 @@ class LoginController extends Controller {
 	 * @return void
 	 */
 	public function index() {
+		if (isset($_GET['logout'])) {
+			unset($_SESSION['user']);
+			redirect('');
+		}
+		if (isset($this->user)) 
+			$this->redirect('');
 		$this->tpl->display('login.phtml');
 	}
 	
@@ -32,7 +38,7 @@ class LoginController extends Controller {
 			} else {
 				// login succeeded
 				$_SESSION['user'] = array( 'id' => $user['id'] );
-				redirect(WEBROOT);
+				redirect('');
 			}
 		}
 		$this->index();

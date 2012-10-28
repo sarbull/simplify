@@ -15,13 +15,14 @@
 			<form action="home/filter">
 				<div id="filterForm" style="font-size:12px;margin-bottom:15px;">
 					<input style="width: 99%;" placeholder="filter..." type="text" name="search" /><br />
+					<input type="submit" value="Filter" style="position: absolute; top: -9999px;" />
 				</div>
 			</form>
 			
 			<? foreach ($items as $item): ?>
 			<div class="item">
 				<div class="hr"></div>
-				<div style="float: right;">
+				<div style="float: right; font-size: 11px; color: #555;">
 					<span title="<?=date('d.m.Y h:i:s', strtotime($item->timestamp))?>"><?=humanizeDateDiffference(time(), strtotime($item->timestamp))?></span>
 				</div>
 				<span class="img">

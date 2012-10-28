@@ -214,15 +214,15 @@ h3 {
 #user ul li a {
     display: block;
     text-decoration: none;
-    color: #000000;
+    color: #FFFFFF;
     padding: 5px 15px 5px 15px;
-    background: #ffffff;
+    background: transparent;
     margin-left: 1px;
     white-space: nowrap;
 }
 #user ul li a:hover {
 	color: #fff;
-	background-color: #1e7c9a;
+	background: #1e7c9a;
 }
 #user li:hover ul {
     display: block;
@@ -234,7 +234,10 @@ h3 {
 }
 #user li:hover a { 
 	text-decoration: none;
-	background: #eeeeee; 
+	background: #FFFFFF; 
+	color: #000000;
+	border: 1px solid #EEE;
+	border-bottom: none;
 }
 #user li:hover li a:hover {
     background: #1e7c9a;

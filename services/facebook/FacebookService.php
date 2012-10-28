@@ -38,20 +38,20 @@ class FacebookService extends BaseService {
 		$items = array();
 		
 		$url_fetch = "https://graph.facebook.com/me/home?access_token=" . $this->token;
-     	$news_feed = json_decode(file_get_contents($url_fetch));
-     	
-     	foreach ($news_feed->data as $value) {
-     		$item = new FeedObject();
-     		$item->id = $value->id;
-     		$item->service = "facebook";
-     		$content = array();
-     		if(isset($value->message))
-     			$item->content = $value->message;
-     		elseif (isset($value->story)) {
-     			$item->content = $value->story;
-     		}
-     		
-			$item->timestamp = mysqldate(strtotime(str_replace('T0', ' ', $value->updated_time)));
+		$news_feed = json_decode(file_get_contents($url_fetch));
+		
+		foreach ($news_feed->data as $value) {
+			$item = new FeedObject();
+			$item->id = $value->id;
+			$item->service = "facebook";
+			$content = array();
+			if(isset($value->message))
+				$item->content = $value->message;
+			elseif (isset($value->story)) {
+				$item->content = $value->story;
+			}
+			
+			$item->timestamp = mysqldate(strtotime($value->updated_time));
 			$item->author = $value->from->name;
 			$item->author_id = $value->from->id;
 			//http://graph.facebook.com/silviu.simon/picture

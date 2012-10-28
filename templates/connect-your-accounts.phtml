@@ -5,16 +5,24 @@
 	
 	<div id="serviceConnectResults"></div>
 	
-	<b>Google+:</b> not implemented<br/>
+	<b>Google+:</b> 
+	<? if (isset($services['googleplus']['record'])): ?>
+	<span class="success">connected!</span><br />
+	<? else: ?>
+	<?=$services['googleplus']['obj']->getAuthenticator()->getAuthAction();?><br/>
+	<? endif; ?>
+	<br/>
 	
 	<b>Twitter:</b> not implemented<br/>
+	<br/>
 	
 	<b>Facebook:</b> 
 	<? if (isset($services['facebook']['record'])): ?>
-	<span class="green">connected!</span>
+	<span class="success">connected!</span><br />
 	<? else: ?>
 	<?=$services['facebook']['obj']->getAuthenticator()->getAuthAction();?><br/>
 	<? endif; ?>
+	<br/>
 </div>
 
 <script type="text/javascript"><!--

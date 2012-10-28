@@ -1,14 +1,16 @@
 <?php
+require_once dirname(__FILE__).'/google-api-php-client/src/apiClient.php';
+require_once dirname(__FILE__).'/google-api-php-client/src/contrib/apiPlusService.php';
+
 /**
  * Google+ service implementation.
  */
 class GoogleplusService extends BaseService {
-	
 	/**
 	 * Authentication token: used by fetchLatest() to authenticate to facebook.
 	 * @var string
 	 */
-	protected $token = null;
+	public $token = null;
 	
 	/**
 	 * Returns the service's name (google).
@@ -16,7 +18,7 @@ class GoogleplusService extends BaseService {
 	 * @return string
 	 */
 	public function getServiceName() {
-		return 'google';
+		return 'googleplus';
 	}
 	
 	/**
@@ -32,7 +34,32 @@ class GoogleplusService extends BaseService {
 			return null; // not authenticated
 		
 		$items = array();
-		// TODO: fetch items from server and parse them into an array of FeedObjects
+		
+		$optParams = array('maxResults' => 100);
+		// should do this for all friends, but google has no API for retrieving them
+		$activities = $this->plus->activities->listActivities('me', 'public', $optParams);
+		foreach($activities['items'] as $activity) {
+			$url = filter_var($activity['url'], FILTER_VALIDATE_URL);
+			$title = filter_var($activity['title'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$content = filter_var($activity['object']['content'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			
+			$item = new FeedObject();
+			$item->id = $activity['id'];
+			$item->service = "googleplus";
+			
+			$item->title = $title;
+			$item->content = $content;
+			$item->url = $url;
+			
+			$item->timestamp = mysqldate(strtotime($activity['updated']));
+			$item->author = $activity['actor']['displayName'];
+			$item->author_id = $activity['actor']['id'];
+			$item->author_data['avatar'] = $activity['actor']['image']['url'];
+			
+			$items[] = $item;
+     	}
+     	
+		return $items;
 	}
 	
 	/**
@@ -51,6 +78,11 @@ class GoogleplusService extends BaseService {
  */
 class GoogleplusAuthenticator implements ServiceAuthenticator {
 	
+	private $client_id = "67114061491-hmoim1sho9unqoj5elb5sjvlc0ceg8sq.apps.googleusercontent.com";
+	private $client_secret = "vAWgv9IXTVQZsetYvFWFLQDU";
+	private $developer_key = "AIzaSyAppLPZ8LeT02slnxAoShQI1QBRFAJ7b-U";
+	private $my_url = null;
+	
 	/**
 	 * Parent service reference.
 	 * @var FacebookService
@@ -63,6 +95,18 @@ class GoogleplusAuthenticator implements ServiceAuthenticator {
 	 */
 	public function __construct($service) {
 		$this->service = $service;
+		$this->my_url = WEBROOT . "service/googleplus";
+		
+		$client = new apiClient();
+		$client->setApplicationName("Simplify");
+		$client->setClientId($this->client_id);
+		$client->setClientSecret($this->client_secret);
+		$client->setRedirectUri($this->my_url);
+		$client->setDeveloperKey($this->developer_key);
+		$client->setScopes(array('https://www.googleapis.com/auth/plus.me'));
+		$plus = new apiPlusService($client);
+		$this->client = $client;
+		$this->plus = $plus;
 	}
 	
 	/**
@@ -73,7 +117,9 @@ class GoogleplusAuthenticator implements ServiceAuthenticator {
 	 * @return string Action's URL.
 	 */
 	public function getAuthAction() {
-		// return redirection link that opens a popup window
+		$authUrl = $this->client->createAuthUrl();
+		
+		return "<a href=\"".ehtml($authUrl)."\" onclick=\"window.open(this.href, '_blank', 'height=500,width=700,status=yes,toolbar=no,menubar=no,location=no,scrollbars=no');return false;\">+ Conectare cont</a>";
 	}
 	
 	/**
@@ -85,7 +131,8 @@ class GoogleplusAuthenticator implements ServiceAuthenticator {
 	 * @return mixed Authenticated client / failure.
 	 */
 	public function getClientData() {
-		// return the client ID (used to generate the token)
+		$this->client->authenticate();
+		return $this->client->getAccessToken();
 	}
 	
 	/**
@@ -96,9 +143,10 @@ class GoogleplusAuthenticator implements ServiceAuthenticator {
 	 * @return boolean Whether the authenticated succeeded.
 	 */
 	public function authenticate($clientData) {
-		$clientID = $clientData['clientID'];
-		// TODO: fetch the associated token and set the $this->service->token variable 
-		// with its value
+		$this->client->setAccessToken($clientData);
+		$this->service->token = $this->client->getAccessToken();
+		$this->service->plus = $this->plus;
+		return true;
 	}
 	
 	
