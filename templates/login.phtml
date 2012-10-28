@@ -21,6 +21,11 @@
 				<? if (isset($error)): ?><div class="error">
 					<?=$error;?>
 				</div><br /><? endif; ?>
+				
+				<? if (isset($success)): ?><div class="success">
+					<?=$success;?>
+				</div><br /><? endif; ?>
+				
 				<div style="270px;float:left;">
 					<h3>Login</h3>
 					<form action="login/login" method="post">
@@ -40,29 +45,30 @@
 						</table>
 					</form>
 				</div>
+				
 				<div style="float:left;width:480px;margin-left:50px;">
 					<h3>Register</h3>
 					<form action="login/register" method="post">
 						<table>
 							<tr>
 								<td>name &nbsp;</td>
-								<td><input type="text" name="name" id="name"/></td>
+								<td><input type="text" name="name" id="name" /></td>
 							</tr>
 							<tr>
 								<td>email &nbsp;</td>
-								<td><input type="text" name="email" id="email"/></td>
+								<td><input type="text" name="email" id="email" /></td>
 							</tr>
 							<tr>
 								<td>password</td>
-								<td><input type="password" name="password" id="password"/></td>
+								<td><input type="password" name="password" id="password" /></td>
 							</tr>
 							<tr>
 								<td>repeat</td>
-								<td><input type="password" name="password2" id="password2"/></td>
+								<td><input type="password" name="password2" id="password2" /></td>
 							</tr>
 							<tr>
 								<td></td>
-								<td><input type="submit" value="Create Account"/></td>
+								<td><input type="submit" value="Create Account" /></td>
 							</tr>
 						</table>
 					</form>

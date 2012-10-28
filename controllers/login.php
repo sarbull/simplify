@@ -49,8 +49,30 @@ class LoginController extends Controller {
 	 * @return void
 	 */
 	public function register() {
+		global $db;
 		if (isset($_POST['email'])) {
-			
+			if (empty($_POST['name'])) {
+				$this->set('error', 'No name specified!');
+			} elseif (empty($_POST['email'])) {
+				$this->set('error', 'No email specified!');
+			} elseif (empty($_POST['password'])) {
+				$this->set('error', 'No password specified!');
+			} elseif ($_POST['password'] != $_POST['password2']) {
+				$this->set('error', 'Passwords do not match!');
+			} else {
+				$old_user = $db->fetch("SELECT * FROM `users` WHERE `email` = '".$db->escape($_POST['email'])."'");
+				if ($old_user) {
+					$this->set('error', 'The specified email already exists!');
+					
+				} else {
+					$db->qinsert('users', array(
+							'name' => $_POST['name'],
+							'email' => $_POST['email'],
+							'password' => md5($_POST['password']),
+						));
+					$this->set('success', 'User successfully created!');
+				}
+			}
 		}
 		$this->index();
 	}
