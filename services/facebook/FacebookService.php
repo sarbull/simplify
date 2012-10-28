@@ -9,6 +9,10 @@ class FacebookService extends BaseService {
 	 * @var string
 	 */
 	protected $token = null;
+
+	public function __construct() {
+		
+	}
 	
 	/**
 	 * Returns the service's name (facebook).
@@ -32,7 +36,31 @@ class FacebookService extends BaseService {
 			return null; // not authenticated
 		
 		$items = array();
-		// TODO: fetch items from server and parse them into an array of FeedObjects
+
+		$url_fetch = "https://graph.facebook.com/me/home?access_token=" . $this->token;
+     	$news_feed = json_decode(file_get_contents($url_fetch));
+
+     	foreach ($news_feed->data as $value) {
+     		$item = new FeedObject();
+     		$item->id = $value->id;
+     		$item->service = "facebook";
+     		if(isset($value->message))
+     			$item->content = $value->message;
+     		elseif (isset($value->story)) {
+     			$item->content = $value->story;
+     		}
+
+			$item->timestamp = mysqldate(strtotime($value->created_time));
+			$item->author = $value->from->name;
+			$item->author_id = $value->from->id;
+			//http://graph.facebook.com/silviu.simon/picture
+			$item->author_data['avatar'] = "http://graph.facebook.com/".$item->author_id. "/picture";
+			//$url_test = "https://graph.facebook.com/me/home?access_token=" . $_SESSION['access_token'];
+			$items[] = $item;
+     		# code...
+     	}
+     	
+		return $items;
 	}
 	
 	/**
@@ -51,6 +79,11 @@ class FacebookService extends BaseService {
  * Facebook service OAuth wrapper.
  */
 class FacebookAuthenticator implements ServiceAuthenticator {
+	
+	private $app_id = "422551301126797";
+	private $app_secret = "74c2dcc8e4ac0a39151c505d11352e70";
+	private $my_url = null;
+	
 	/**
 	 * Parent service reference.
 	 * @var FacebookService
@@ -63,6 +96,7 @@ class FacebookAuthenticator implements ServiceAuthenticator {
 	 */
 	public function __construct($service) {
 		$this->service = $service;
+		$this->my_url = WEBROOT . "service/facebook";
 	}
 	
 	/**
@@ -73,6 +107,12 @@ class FacebookAuthenticator implements ServiceAuthenticator {
 	 * @return string Action's URL.
 	 */
 	public function getAuthAction() {
+		$_SESSION['facebook_state'] = md5(uniqid(rand(), TRUE)); // CSRF protection
+		$dialog_url = "https://www.facebook.com/dialog/oauth?client_id=" 
+			. $app_id . "&redirect_uri=" . urlencode($this->my_url) . "&state="
+			. $_SESSION['facebook_state'] . "&scope=user_birthday,read_stream";
+
+		return "<a href=\"".$dialog_url."\" onclick=\"window.open(this.href);return false;";
 		// return redirection link that opens a popup window
 	}
 	
@@ -86,6 +126,9 @@ class FacebookAuthenticator implements ServiceAuthenticator {
 	 */
 	public function getClientData() {
 		// return the client ID (used to generate the token)
+		if($_REQUEST['facebook_state'] !=  $_SESSION['facebook_state'])
+			return null;
+		return $_REQUEST["code"];
 	}
 	
 	/**
@@ -99,6 +142,21 @@ class FacebookAuthenticator implements ServiceAuthenticator {
 		$clientID = $clientData['clientID'];
 		// TODO: fetch the associated token and set the $this->service->token variable 
 		// with its value
+		$token_url = "https://graph.facebook.com/oauth/access_token?"
+			. "client_id=" . $app_id . "&redirect_uri=" . urlencode($my_url)
+			. "&client_secret=" . $app_secret . "&code=" . $code;
+
+		$response = file_get_contents($token_url);
+		$params = null;
+
+		if(!$response)
+			return false;
+
+		parse_str($response, $params);
+
+		$this->service->token = $params['access_token'];
+
+		return true;
 	}
 	
 }
