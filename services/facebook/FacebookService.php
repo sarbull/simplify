@@ -44,12 +44,19 @@ class FacebookService extends BaseService {
 			$item = new FeedObject();
 			$item->id = $value->id;
 			$item->service = "facebook";
-			$content = array();
+			$item->content = array();
 			if(isset($value->message))
-				$item->content = $value->message;
+				$item->content[] = $value->message;
 			elseif (isset($value->story)) {
-				$item->content = $value->story;
+				$item->content[] = $value->story;
 			}
+			if ($value->type == 'video') {
+				$item->content[] = $value->link;
+			}
+			elseif ($value->type == 'photo') {
+				$item->content[] = $value->picture;
+			}
+			$item->content = $item->content[0];
 			
 			$item->timestamp = mysqldate(strtotime($value->updated_time));
 			$item->author = $value->from->name;
@@ -57,7 +64,7 @@ class FacebookService extends BaseService {
 			//http://graph.facebook.com/silviu.simon/picture
 			$item->author_data['avatar'] = "http://graph.facebook.com/".$item->author_id. "/picture";
 			$item->link = $value->actions[0]->link;
-			//$url_test = "https://graph.facebook.com/me/home?access_token=" . $_SESSION['access_token'];
+			
 			$items[] = $item;
      	}
      	

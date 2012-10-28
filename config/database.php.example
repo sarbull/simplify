@@ -1,0 +1,13 @@
+<?php
+/**
+ * Database connection configuration file.
+ * SAMPLE FILE. Rename to database.php!
+ */
+
+$config['database'] = array(
+		'host' => 'localhost', 
+		'user' => 'root',
+		'password' => 'root',
+		'database' => 'simplify',
+	);
+
