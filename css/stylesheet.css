@@ -18,10 +18,18 @@ a:hover {
 input {
 	border:1px solid #c9c9c9;
 	padding:5px 5px 5px 5px;
+	-moz-border-radius:5px;
+	border-radius: 5px;
 }
 
 input:active {
-	outline: none;
+	outline: none !important;
+	border:1px solid #3399ff;
+}
+
+input:focus {
+	outline: none !important;
+	border:1px solid #3399ff;
 }
 
 h3 {
