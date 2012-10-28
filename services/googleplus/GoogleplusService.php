@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Google+ service implementation.
+ */
 class GoogleplusService extends BaseService {
 	
 	
