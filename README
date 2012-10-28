@@ -4,7 +4,21 @@ Simplify
   A project that aims to be a simple social networks aggregator. The aim is that the user of this Web Service will 
 have all his favourite social networks on the same page. 
   The api's used in order to integrate Google + on Simplify are Google-plus-php-starter and google-api-php. For Facebook,
-Graph Api was used.
+the Graph Api was used.
+  These API's allow the user to connect to Google+ and Facebook via Simplify. By allowing the Web APP access to the public 
+data that the user shares, Simplify is able to search the News Feed of the user to display relevant information.
 
+Workflow:
+ The user must first create an account on Simplify, after which he can add one or more social network accounts so he
+can have them all in one page.
+
+What Works:
+-Facebook
+-Google+
+-Search Fields
+-Changing Passwords
+
+What does not work
+- Twitter
 
 
