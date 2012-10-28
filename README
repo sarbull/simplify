@@ -1,6 +1,10 @@
 Simplify
 
 
-  A project that aims to be a simple social networks aggregator. The aim is that the user of this Web Service will have all his favourite social networks on the same page. 
+  A project that aims to be a simple social networks aggregator. The aim is that the user of this Web Service will 
+have all his favourite social networks on the same page. 
+  The api's used in order to integrate Google + on Simplify are Google-plus-php-starter and google-api-php. For Facebook,
+Graph Api was used.
+
 
 
