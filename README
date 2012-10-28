@@ -1,11 +1,11 @@
 Simplify
 
 
-  A project that aims to be a simple social networks aggregator. The aim is that the user of this Web Service will 
-have all his favourite social networks on the same page. 
+  A project that aims to be a very modular social networks aggregator (you can add any social network api in just a few lines of code). 
+  The aim is that the user of this Web Service will have all his favourite social networks on the same page. 
   The api's used in order to integrate Google + on Simplify are Google-plus-php-starter and google-api-php. For Facebook,
 the Graph Api was used.
-  These API's allow the user to connect to Google+ and Facebook via Simplify. By allowing the Web APP access to the public 
+  These APIs allow the user to connect to Google+ and Facebook via Simplify. By allowing the Web APP access to the public 
 data that the user shares, Simplify is able to search the News Feed of the user to display relevant information.
 
 Workflow:
@@ -20,4 +20,11 @@ What Works:
 Things to implement in the future
 - Twitter integration.
 
+Installation instructions:
+1. You need apache2+php5+mysql+mod_rewrite enabled;
+2. copy the files so that the web path will be localhost/Simplify (this exact path is required because the API keys were generated to work with them);
+3. Chmod 777 tmp/
+4. Import config/database.sql into the mysql database;
+5. Rename and edit config/database.php.example to database.php (enter the database credentials here).
+6. The web app should work.
 
