@@ -10,4 +10,3 @@ $url = $_GET['request_url'];
 
 // dispatch the request to a controller
 Controller::dispatch($url);
-?>

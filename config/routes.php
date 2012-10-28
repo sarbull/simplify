@@ -11,6 +11,8 @@ $routes = array();
 
 $routes[''] = 'home';
 $routes['home'] = 'home';
+$routes['settings'] = 'settings';
+$routes['connect-your-accounts'] = 'connect';
 $routes['error'] = 'error';
 
 $routes['login'] = 'login';
