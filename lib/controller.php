@@ -10,6 +10,20 @@ class Controller {
 	protected $tpl = null;
 	
 	/**
+	 * Set to true to automatically require the user to be logged in.
+	 * @var boolean
+	 */
+	protected $authorize = false;
+	
+	/**
+	 * Currently authenticated user's database record.
+	 * Updated in beforeAction() from the session's data.
+	 * 
+	 * @var array|null
+	 */
+	public $user = null;
+	
+	/**
 	 * Default class constructor.
 	 * Initializes controller objects (e.g. template engine).
 	 */
@@ -19,6 +33,30 @@ class Controller {
 		$this->tpl = new PSTTemplate();
 		$this->tpl->config['dir_templates'] = $config['template']['dir'];
 		$this->tpl->config['dir_cache'] = $config['template']['cache'];
+	}
+	
+	/**
+	 * Before action event.
+	 * Called before executing dispatched controller's action.
+	 * 
+	 * @return void
+	 */
+	public function beforeAction() {
+		// load the user from database
+		if (isset($_SESSION['user'])) {
+			$this->user = $db->fetch("SELECT * FROM `users` WHERE `id`='" . 
+				$db->escape($_SESSION['user']['id'])."'");
+			if (!$this->user) {
+				unset($_SESSION['user']);
+				// redirect to the login page
+				redirect(WEBROOT);
+			}
+			$this->set('user', $this->user);
+		}
+		
+		if ($this->authorize && !isset($this->user)) {
+			redirect('login');
+		}
 	}
 	
 	/**

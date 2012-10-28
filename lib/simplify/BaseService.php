@@ -20,7 +20,7 @@ abstract class BaseService {
 	 * If timestamp is null, there is no time span limit for the items to be retrieved.
 	 * TODO: implement a realtime update feature
 	 * 
-	 * @param  double $timestamp The timestamp
+	 * @param  string $timestamp The timestamp to compare the results with (Mysql format).
 	 * @return array An array of FeedObject items.
 	 */
 	abstract public function fetchLatest($timestamp = null);
@@ -54,16 +54,16 @@ abstract class BaseService {
 	}
 	
 	/**
-	 * Stores the given items into the database.
-	 * If the item already exists, it is updated to the latest version.
+	 * Factory method: returns a requested service's instance.
 	 * 
-	 * @param  array $items Array of FeedObjects to store.
-	 * @return boolean True if the save operation succeeded.
+	 * @param  [type] $service The name of the service to load.
+	 * @return BaseService The requested service's instance.
 	 */
-	public function storeToDb($items) {
-		foreach ($items as $item) {
-			$item->saveToDb();
-		}
+	public static function loadService($service) {
+		$class = ucfirst($service).'Service';
+		require(SITE_ROOT.'/services/'.$service.'/'.$class.'.php');
+		$serviceObj = new $class();
+		return $serviceObj;
 	}
 	
 }

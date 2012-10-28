@@ -17,7 +17,7 @@ function redirect($url='') {
 		if (preg_match('/\?[^?]*$/',$url)) {$url.='&ajax';}
 		else {$url.='?ajax';}
 	}
-	header('Location: '.(preg_match('/^[a-zA-Z]:\/\//',$url)?'':$config['SITE_WEB_ROOT']).$url);die();
+	header('Location: '.(preg_match('/^[a-zA-Z]:\/\//',$url)?'':WEBROOT).$url);die();
 }
 
 function ehtml($str) {
@@ -34,6 +34,10 @@ function ejs1($str) { // escape JavaScript single-quotes
 
 function ip2ulong($ip) {
 	return sprintf("%u",ip2long($ip));
+}
+
+function mysqldate($timestamp = null) {
+	return date('Y-m-d h:i:s', $timestamp);
 }
 
 /**
