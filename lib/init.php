@@ -28,6 +28,12 @@ require_once(SITE_ROOT.'/lib/class.simplegd.php');
 require_once(SITE_ROOT.'/lib/functions.php');
 require_once(SITE_ROOT.'/lib/controller.php');
 
+// load simplify libraries
+require_once(SITE_ROOT.'/lib/simplify/FeedObject.php');
+require_once(SITE_ROOT.'/lib/simplify/BaseService.php');
+require_once(SITE_ROOT.'/lib/simplify/ServiceUpdater.php');
+
+
 function ob_callback($buf) {
 	global $config;
 	// replace all relative URLs with absolute values
